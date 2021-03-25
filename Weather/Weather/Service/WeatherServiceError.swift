@@ -13,6 +13,15 @@ enum WeatherServiceError: Error {
     case decoding(Error?)
     case network(Error?)
     case noDataFound
+    case networkUnavailable
+    
+    var description: String {
+        return localizedDescription
+    }
+    
+    var debugDescription: String {
+        return localizedDescription
+    }
     
     var localizedDescription: String {
         switch self {
@@ -28,6 +37,8 @@ enum WeatherServiceError: Error {
             return "Error Decoding object: \(description)"
         case .noDataFound:
             return "No Data found"
+        case .networkUnavailable:
+            return "No Internet available"
         }
     }
 }
