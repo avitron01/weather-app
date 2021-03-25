@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9966E90F260C5B0C007DA8FD /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9966E90E260C5B0C007DA8FD /* DatabaseManager.swift */; };
 		997242E9260BA4C6003B32BD /* WeatherNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 997242E8260BA4C6003B32BD /* WeatherNetworkManager.swift */; };
 		997242EC260BA56F003B32BD /* WeatherServiceError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 997242EB260BA56F003B32BD /* WeatherServiceError.swift */; };
 		997242EF260BA5C9003B32BD /* WeatherURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 997242EE260BA5C9003B32BD /* WeatherURL.swift */; };
@@ -25,6 +26,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		9966E90E260C5B0C007DA8FD /* DatabaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseManager.swift; sourceTree = "<group>"; };
 		997242E8260BA4C6003B32BD /* WeatherNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherNetworkManager.swift; sourceTree = "<group>"; };
 		997242EB260BA56F003B32BD /* WeatherServiceError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherServiceError.swift; sourceTree = "<group>"; };
 		997242EE260BA5C9003B32BD /* WeatherURL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherURL.swift; sourceTree = "<group>"; };
@@ -55,12 +57,12 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		997242E2260BA3AC003B32BD /* Manager */ = {
+		997242E2260BA3AC003B32BD /* Database */ = {
 			isa = PBXGroup;
 			children = (
-				997242E7260BA3C5003B32BD /* Service */,
+				9966E90E260C5B0C007DA8FD /* DatabaseManager.swift */,
 			);
-			path = Manager;
+			path = Database;
 			sourceTree = "<group>";
 		};
 		997242E7260BA3C5003B32BD /* Service */ = {
@@ -112,8 +114,9 @@
 			isa = PBXGroup;
 			children = (
 				997242FC260BBD9C003B32BD /* Controllers */,
+				997242E7260BA3C5003B32BD /* Service */,
 				997242FB260BBD8A003B32BD /* Models */,
-				997242E2260BA3AC003B32BD /* Manager */,
+				997242E2260BA3AC003B32BD /* Database */,
 				99FEA355260A674E00D24F15 /* AppDelegate.swift */,
 				99FEA357260A674E00D24F15 /* SceneDelegate.swift */,
 				99FEA35B260A674F00D24F15 /* Main.storyboard */,
@@ -202,6 +205,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				997242E9260BA4C6003B32BD /* WeatherNetworkManager.swift in Sources */,
+				9966E90F260C5B0C007DA8FD /* DatabaseManager.swift in Sources */,
 				997242FE260BBDB8003B32BD /* WeatherService.swift in Sources */,
 				99FEA35A260A674E00D24F15 /* ViewController.swift in Sources */,
 				99FEA356260A674E00D24F15 /* AppDelegate.swift in Sources */,
