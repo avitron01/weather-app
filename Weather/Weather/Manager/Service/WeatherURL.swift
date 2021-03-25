@@ -46,7 +46,8 @@ enum WeatherURL {
         case .base:
             return nil
         case .current(let location):
-            return [URLQueryItem(name: "q", value: location)]
+            return [URLQueryItem(name: "q", value: location),
+                    URLQueryItem(name: "units", value: "metric")]
         }
     }
 }
