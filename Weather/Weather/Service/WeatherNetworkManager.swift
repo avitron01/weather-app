@@ -10,8 +10,8 @@ import Foundation
 typealias WeatherAPICompletion<T> = (Result<T>) -> Void
 
 enum Result<T> {
-    case success(T?)
-    case error(WeatherServiceError?)
+    case success(T)
+    case error(WeatherServiceError)
 }
 
 final class WeatherNetworkManager {

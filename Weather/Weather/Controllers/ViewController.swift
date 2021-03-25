@@ -18,7 +18,7 @@ class ViewController: UIViewController {
             case .success(let weather):
                 print("success")
             case .error(let error):
-                print("Error \(error?.localizedDescription)")
+                print("Error \(error.localizedDescription)")
             }
         }
     }
