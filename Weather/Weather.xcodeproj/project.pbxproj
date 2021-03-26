@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9930209C260DEBD800DCEB82 /* WeatherLocationSearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9930209B260DEBD800DCEB82 /* WeatherLocationSearchController.swift */; };
+		993020A0260DEBFE00DCEB82 /* FavouriteWeatherLocationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9930209F260DEBFE00DCEB82 /* FavouriteWeatherLocationController.swift */; };
 		9966E90F260C5B0C007DA8FD /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9966E90E260C5B0C007DA8FD /* DatabaseManager.swift */; };
 		997242E9260BA4C6003B32BD /* WeatherNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 997242E8260BA4C6003B32BD /* WeatherNetworkManager.swift */; };
 		997242EC260BA56F003B32BD /* WeatherServiceError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 997242EB260BA56F003B32BD /* WeatherServiceError.swift */; };
@@ -26,6 +28,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		9930209B260DEBD800DCEB82 /* WeatherLocationSearchController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherLocationSearchController.swift; sourceTree = "<group>"; };
+		9930209F260DEBFE00DCEB82 /* FavouriteWeatherLocationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouriteWeatherLocationController.swift; sourceTree = "<group>"; };
 		9966E90E260C5B0C007DA8FD /* DatabaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseManager.swift; sourceTree = "<group>"; };
 		997242E8260BA4C6003B32BD /* WeatherNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherNetworkManager.swift; sourceTree = "<group>"; };
 		997242EB260BA56F003B32BD /* WeatherServiceError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherServiceError.swift; sourceTree = "<group>"; };
@@ -57,6 +61,13 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		9930209A260DEBA200DCEB82 /* View Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "View Models";
+			sourceTree = "<group>";
+		};
 		997242E2260BA3AC003B32BD /* Database */ = {
 			isa = PBXGroup;
 			children = (
@@ -90,6 +101,8 @@
 			isa = PBXGroup;
 			children = (
 				99FEA359260A674E00D24F15 /* WeatherViewController.swift */,
+				9930209B260DEBD800DCEB82 /* WeatherLocationSearchController.swift */,
+				9930209F260DEBFE00DCEB82 /* FavouriteWeatherLocationController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -113,6 +126,7 @@
 		99FEA354260A674E00D24F15 /* Weather */ = {
 			isa = PBXGroup;
 			children = (
+				9930209A260DEBA200DCEB82 /* View Models */,
 				997242FC260BBD9C003B32BD /* Controllers */,
 				997242E7260BA3C5003B32BD /* Service */,
 				997242FB260BBD8A003B32BD /* Models */,
@@ -212,7 +226,9 @@
 				997242EC260BA56F003B32BD /* WeatherServiceError.swift in Sources */,
 				997242EF260BA5C9003B32BD /* WeatherURL.swift in Sources */,
 				99724301260BC995003B32BD /* WeatherData.swift in Sources */,
+				9930209C260DEBD800DCEB82 /* WeatherLocationSearchController.swift in Sources */,
 				99FEA358260A674E00D24F15 /* SceneDelegate.swift in Sources */,
+				993020A0260DEBFE00DCEB82 /* FavouriteWeatherLocationController.swift in Sources */,
 				997242F9260BAE44003B32BD /* WeatherServiceConstants.swift in Sources */,
 				997242F6260BAD68003B32BD /* WeatherServiceRequest.swift in Sources */,
 			);
