@@ -68,27 +68,49 @@ final class WeatherNetworkManager {
                 return
             }
             
-            do {
-                let dict = try JSONSerialization.jsonObject(with: jsonData, options: JSONSerialization.ReadingOptions.mutableContainers)
-                print("\(dict)")
-            } catch let error {
-                print("\(error)")
-            }
-            
-            
+
             do {
                 let decodedObject = try self.decoder.decode(T.self, from: jsonData)
                 DispatchQueue.main.sync {
                     completion(.success(decodedObject))
                 }
             } catch let error {
+                guard let apiError = self.checkForAPIError(using: jsonData) else {
+                    DispatchQueue.main.sync {
+                        print("Error finding API error, passing decode error")
+                        completion(.error(.decoding(error)))
+                    }
+                    return
+                }
+                
                 DispatchQueue.main.sync {
-                    completion(.error(.decoding(error)))
+                    completion(.error(apiError))
                 }
             }
         }.resume()
     }
+    
+    func checkForAPIError(using jsonData: Data) -> WeatherServiceError? {
+        do {
+            let dict = try JSONSerialization.jsonObject(with: jsonData, options: JSONSerialization.ReadingOptions.mutableContainers) as? [String : AnyObject]
+            
+            if let code = dict?["cod"] as? String {
+                if let message = dict?["message"] as? String {
+                    return .apiError(message)
+                }
+                
+                return .apiError("\(code) error")
+            }
+        } catch {
+            print("Error parsing json data for API error")
+            return nil
+        }
+        
+        print("No data found pointing to API error, need additional debugging")
+        return nil
+    }
 }
+
 
 extension WeatherNetworkManager {
     

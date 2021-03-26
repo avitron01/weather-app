@@ -8,12 +8,15 @@
 import Foundation
 
 enum WeatherServiceError: Error {
+    typealias Message = String
+    
     case parseError
     case urlCreationError
     case decoding(Error?)
     case network(Error?)
     case noDataFound
     case networkUnavailable
+    case apiError(Message)
     
     var description: String {
         return localizedDescription
@@ -39,6 +42,8 @@ enum WeatherServiceError: Error {
             return "No Data found"
         case .networkUnavailable:
             return "No Internet available"
+        case .apiError(let message):
+            return message
         }
     }
 }
