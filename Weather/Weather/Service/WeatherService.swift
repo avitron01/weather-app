@@ -25,18 +25,27 @@ class WeatherService: WeatherServiceProtcol {
     
     static func fetchCurrentWeather(for location: String, completion: @escaping CurrentWeatherServiceCompletion) {
         network.fetchData(for: .current(location), type: WeatherData.self) { result in
-            performDBUpdates(for: result)
+            switch result {
+            case .success(let weatherData):
+                cacheWeatherData(for: weatherData.realmData)
+            case .error(let error):
+                if (error == WeatherServiceError.networkUnavailable) {
+                    let values = retrieveCachedData(for: WeatherData.realmType)
+                    let predicate = NSPredicate(format: "name contains[c] %@", location)
+                    let resultValue = values.filter(predicate)
+                    
+                    guard let codableValue = resultValue.first?.codableObject else {
+                        print("No values found in DB")
+                        completion(result)
+                        return
+                    }
+                    
+                    completion(Result.success(codableValue))
+                    return
+                }
+            }
+            
             completion(result)
-        }
-    }
-    
-    private static func performDBUpdates(for weatherDataResult: Result<WeatherData>) {
-        switch weatherDataResult {
-        case .success(let weatherData):
-            cacheWeatherData(for: weatherData.realmData)
-            retrieveCachedData(for: RealmWeatherData.self)
-        case .error(_):
-            break
         }
     }
     
