@@ -7,7 +7,7 @@
 
 import UIKit
 
-class FavouriteWeatherLocationController: UIViewController {
+class FavouriteWeatherLocationController: BaseViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()

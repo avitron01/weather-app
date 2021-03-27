@@ -7,7 +7,7 @@
 
 import UIKit
 
-class WeatherLocationSearchController: UIViewController {
+class WeatherLocationSearchController: BaseViewController {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var searchLabel: UILabel!
     @IBOutlet weak var searchBar: UISearchBar!
@@ -16,8 +16,6 @@ class WeatherLocationSearchController: UIViewController {
     private var shouldHideRecentsList: Bool {
         return viewModel.recentlySearched.value.count <= 0
     }
-    
-    let activityIndicator = 
     
     override func viewDidLoad() {
         super.viewDidLoad()
