@@ -6,3 +6,9 @@
 //
 
 import Foundation
+
+struct StringConstants {
+    struct WeatherLocationSearchController {
+        static let recentlySearched = "Recently Searched"
+    }
+}

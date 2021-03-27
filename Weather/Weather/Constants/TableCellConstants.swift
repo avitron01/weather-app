@@ -6,3 +6,9 @@
 //
 
 import Foundation
+
+struct TableCellConstants {
+    struct WeatherLocationSearchController {
+        static let recents = "recents"
+    }
+}

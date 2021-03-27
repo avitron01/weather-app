@@ -83,6 +83,20 @@ struct Weather: Codable, RealmableEmbedded {
     var description: String
     var icon: String
     
+    var iconImageInfo: (isDayTime: Bool, iconName: String) {
+        let dayInfo: String = icon.filter {
+            return ($0 == "d" || $0 == "n")
+        }
+        
+        var iconName = ""
+        if let firstIndex = icon.firstIndex(of: Character(dayInfo)) {
+            iconName = String(icon[..<firstIndex])
+        }
+                
+        let isDayTime = (dayInfo == "d")
+        return (isDayTime, iconName)
+    }
+    
     var realmData: RealmWeather {
         return RealmWeather(weather: self)
     }

@@ -21,8 +21,9 @@ class WeatherLocationSearchViewModel {
     }()
     
     func fetchWeatherData(for location: String) {
-        isLoading.value = true
+        self.isLoading.value = true
         WeatherService.fetchCurrentWeather(for: location) { (result) in
+            self.isLoading.value = false
             switch result {
             case .success(let weatherData):
                 self.presentWeatherDetailViewController(with: weatherData, context: UIViewController())

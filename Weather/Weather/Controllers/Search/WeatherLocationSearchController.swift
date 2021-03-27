@@ -7,10 +7,15 @@
 
 import UIKit
 
+//MARK: - TODO: Handle error cases
+
 class WeatherLocationSearchController: BaseViewController {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var searchLabel: UILabel!
     @IBOutlet weak var searchBar: UISearchBar!
+    
+    private let stringConstants = StringConstants.WeatherLocationSearchController.self
+    private let cellConstants = TableCellConstants.WeatherLocationSearchController.self
     
     private let viewModel = WeatherLocationSearchViewModel()
     private var shouldHideRecentsList: Bool {
@@ -21,6 +26,10 @@ class WeatherLocationSearchController: BaseViewController {
         super.viewDidLoad()
         self.viewModel.recentlySearched.bind { (weatherData) in
             self.tableView.reloadData()
+        }
+                
+        self.viewModel.isLoading.bind { (isLoading) in
+            isLoading ? self.showSpinner() : self.removeSpinner()
         }
     }
     
@@ -34,7 +43,7 @@ class WeatherLocationSearchController: BaseViewController {
 
 extension WeatherLocationSearchController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return "Recently Searched"
+        return stringConstants.recentlySearched
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -42,11 +51,17 @@ extension WeatherLocationSearchController: UITableViewDelegate, UITableViewDataS
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "recents", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellConstants.recents, for: indexPath)
         cell.textLabel?.text = self.viewModel.recentlySearched.value[indexPath.row].name
         return cell
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let item = self.viewModel.recentlySearched.value[indexPath.row]
+        let viewModel = WeatherViewModel(weatherData: item)
+        let viewController = WeatherViewController(viewModel: viewModel)
+        self.present(viewController, animated: true, completion: nil)        
+    }
 }
 
 extension WeatherLocationSearchController: UISearchBarDelegate {
