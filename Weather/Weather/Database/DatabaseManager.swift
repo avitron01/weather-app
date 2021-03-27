@@ -8,6 +8,8 @@
 import Foundation
 import RealmSwift
 
+
+
 class DatabaseManager {
     static let shared = DatabaseManager()
     let localRealm: Realm
@@ -26,3 +28,5 @@ class DatabaseManager {
         }
     }
 }
+
+

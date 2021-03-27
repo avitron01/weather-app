@@ -62,17 +62,40 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="DPB-cH-hod">
+                                <rect key="frame" x="0.0" y="88" width="414" height="725"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="recents" rowHeight="76" id="PFq-34-Cih">
+                                        <rect key="frame" x="0.0" y="28" width="414" height="76"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="PFq-34-Cih" id="dPE-1f-cjG">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="76"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="BYZ-38-t0r" id="6Ev-ET-tCH"/>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="r2R-e7-D94"/>
+                                </connections>
+                            </tableView>
                             <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="ONs-yM-7X2">
                                 <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="XKw-0f-nqQ"/>
                                 </constraints>
                                 <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="pG9-fC-PXQ"/>
+                                </connections>
                             </searchBar>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="DPB-cH-hod">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Search" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ECv-Cy-Rk2">
                                 <rect key="frame" x="0.0" y="88" width="414" height="725"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                            </tableView>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="47"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -80,13 +103,22 @@
                             <constraint firstItem="ONs-yM-7X2" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="4vg-It-em3"/>
                             <constraint firstItem="DPB-cH-hod" firstAttribute="top" secondItem="ONs-yM-7X2" secondAttribute="bottom" id="9Jh-Y1-wqq"/>
                             <constraint firstItem="ONs-yM-7X2" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="AHD-Wl-Qb1"/>
+                            <constraint firstItem="ECv-Cy-Rk2" firstAttribute="top" secondItem="ONs-yM-7X2" secondAttribute="bottom" id="DiK-WV-Eao"/>
                             <constraint firstItem="DPB-cH-hod" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="FWx-cz-HgD"/>
+                            <constraint firstItem="ECv-Cy-Rk2" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="Ke8-R1-qTn"/>
                             <constraint firstItem="ONs-yM-7X2" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="RXz-Zs-ii3"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="ECv-Cy-Rk2" secondAttribute="bottom" id="mIX-kV-faR"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="ECv-Cy-Rk2" secondAttribute="trailing" id="mo2-MO-rju"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="DPB-cH-hod" secondAttribute="trailing" id="nTO-wV-gZ4"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="DPB-cH-hod" secondAttribute="bottom" id="qNt-Jm-okz"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" systemItem="search" id="taN-iK-2er"/>
+                    <connections>
+                        <outlet property="searchBar" destination="ONs-yM-7X2" id="sxY-6o-uoZ"/>
+                        <outlet property="searchLabel" destination="ECv-Cy-Rk2" id="AUo-St-VqB"/>
+                        <outlet property="tableView" destination="DPB-cH-hod" id="zly-zD-tur"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
@@ -105,7 +137,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WWB-Y8-2Sf" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="345" y="-297"/>
+            <point key="canvasLocation" x="446" y="-116"/>
         </scene>
     </scenes>
     <resources>
