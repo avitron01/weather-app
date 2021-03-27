@@ -55,7 +55,7 @@ enum WeatherState: String {
         case .showerRain:
             return .systemGray
         case .rain:
-            return isDayTime ? .systemOrange : .white
+            return .white
         case .thunderStorm:
             return isDayTime ? .systemOrange : .white
         case .snow:
@@ -77,12 +77,9 @@ enum WeatherState: String {
                               (253, 253, 253),
                               (140, 197, 240)]
         } else {
-            gradientColors =  [(1, 22, 46),
-                               (0, 29, 55),
-                               (0, 39, 70),
-                               (1, 49, 85),
-                               (0, 58, 99),
-                               (1, 66, 109)]
+            gradientColors =  [(32, 86, 160),
+                               (17, 54, 119),
+                               (8, 37,93)]
         }
                             
         let cgColors = gradientColors.map {
@@ -104,33 +101,49 @@ class WeatherViewModel {
     var isDayTime: Bool = true
     var iconName: String?
     
-    var otherWeatherData: [String]?
+    var otherWeatherData: [(field: String, value: String)]?
     
     init(weatherData: WeatherData) {
         self.weatherData = weatherData
         self.weatherLocation = weatherData.name
+        self.weatherDescription = weatherData.weather.first?.description
         
         if let temp = weatherData.main?.temp {
             self.weatherTemperature = "\(temp)°C"
         }
-        
-        self.weatherDescription = weatherData.weather.first?.description
-        
         if let currentWeatherInfo = weatherData.weather.first {
-            let iconInfo = currentWeatherInfo.iconImageInfo
-            self.isDayTime = iconInfo.isDayTime
-            self.iconName = iconInfo.iconName
-            let weatherState = WeatherState(rawValue: iconInfo.iconName)
-            
-            if let state = weatherState {
-                self.weatherState = state
-                self.weatherImage = UIImage(systemName: state.getImageName(isDayTime: isDayTime))?.withRenderingMode(.alwaysOriginal)
-                    .withTintColor(state.getTintColor(isDayTime: isDayTime))
-                self.weatherGradientColors = state.getWeatherGradientColor(isDayTime: isDayTime)
-            }
+            self.initializeWeatherInfo(using: currentWeatherInfo)
+        }
+        self.initializeOtherWeatherData(using: weatherData)
+    }
+    
+    func initializeWeatherInfo(using weather: Weather) {
+        let iconInfo = weather.iconImageInfo
+        self.isDayTime = iconInfo.isDayTime
+        self.iconName = iconInfo.iconName
+        
+        let weatherState = WeatherState(rawValue: iconInfo.iconName)
+        if let state = weatherState {
+            self.weatherState = state
+            self.weatherImage = UIImage(systemName: state.getImageName(isDayTime: isDayTime))?.withRenderingMode(.alwaysOriginal)
+                .withTintColor(state.getTintColor(isDayTime: isDayTime))
+            self.weatherGradientColors = state.getWeatherGradientColor(isDayTime: isDayTime)
         }
     }
     
-    
+    func initializeOtherWeatherData(using weatherData: WeatherData) {
+        var otherData: [(field: String, value: String)] = []
+        otherData.append(("Visibilty:", "\(weatherData.visibility / 1000) km"))
+        
+        if let main = weatherData.main {
+            otherData.append(contentsOf: [("Feels like:", "\(main.feelsLike)°C"),
+                                          ("Temp High:", "\(main.tempMax)°C"),
+                                          ("Temp Low:", "\(main.tempMin)°C"),
+                                          ("Pressure:", "\(main.pressure)hPa"),
+                                          ("Humidity:", "\(main.humidity)%")])
+        }
+         
+        self.otherWeatherData = otherData
+    }
 
 }

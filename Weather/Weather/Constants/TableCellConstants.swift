@@ -11,4 +11,9 @@ struct TableCellConstants {
     struct WeatherLocationSearchController {
         static let recents = "recents"
     }
+    
+    struct WeatherViewController {
+        static let weatherData = "weatherData"
+        static let weatherDataNibName = "WeatherDataTableViewCell"
+    }
 }

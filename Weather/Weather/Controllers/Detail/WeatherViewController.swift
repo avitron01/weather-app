@@ -12,10 +12,10 @@ class WeatherViewController: BaseViewController {
     @IBOutlet weak var weatherLocation: UILabel!
     @IBOutlet weak var weatherTemperature: UILabel!
     @IBOutlet weak var weatherDescription: UILabel!
-    
     @IBOutlet weak var weatherPrimaryInfoStackView: UIStackView!
-    
-    
+    @IBOutlet var labelCollection: [UILabel]!
+        
+    let cellConstants = TableCellConstants.WeatherViewController.self
     
     let viewModel: WeatherViewModel
     var gradientView: CAGradientLayer?
@@ -38,9 +38,17 @@ class WeatherViewController: BaseViewController {
         self.weatherTemperature.text = self.viewModel.weatherTemperature
         self.weatherDescription.text = self.viewModel.weatherDescription
         
+        tableView.register(UINib(nibName: cellConstants.weatherDataNibName, bundle: nil), forCellReuseIdentifier: cellConstants.weatherData)
+        
+        updateLabelColors()
         addWeatherGradientLayer(isDayTime: self.viewModel.isDayTime)
     }
 
+    func updateLabelColors() {
+        for label in labelCollection {
+            label.textColor = self.viewModel.isDayTime ? .black : .white
+        }
+    }
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         self.gradientView?.frame = self.view.bounds
@@ -60,3 +68,20 @@ class WeatherViewController: BaseViewController {
     }
 }
 
+extension WeatherViewController: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return self.viewModel.otherWeatherData?.count ?? 0
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellConstants.weatherData, for: indexPath) as! WeatherDataTableViewCell
+        let weatherInfo = self.viewModel.otherWeatherData?[indexPath.row]
+        cell.fieldLabel.text = weatherInfo?.field
+        cell.valueLabel.text = weatherInfo?.value
+        cell.labelColor = self.viewModel.isDayTime ? .black : .white
+        
+        return cell
+    }
+    
+    
+}

@@ -26,6 +26,8 @@
 		997242FE260BBDB8003B32BD /* WeatherService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 997242FD260BBDB8003B32BD /* WeatherService.swift */; };
 		99724301260BC995003B32BD /* WeatherData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99724300260BC995003B32BD /* WeatherData.swift */; };
 		9972F913260F28FA00AE7E6E /* WeatherView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9972F912260F28FA00AE7E6E /* WeatherView.xib */; };
+		99BC7A85260FA46F005539FA /* WeatherDataTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99BC7A83260FA46F005539FA /* WeatherDataTableViewCell.swift */; };
+		99BC7A86260FA46F005539FA /* WeatherDataTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 99BC7A84260FA46F005539FA /* WeatherDataTableViewCell.xib */; };
 		99FEA356260A674E00D24F15 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99FEA355260A674E00D24F15 /* AppDelegate.swift */; };
 		99FEA358260A674E00D24F15 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99FEA357260A674E00D24F15 /* SceneDelegate.swift */; };
 		99FEA35A260A674E00D24F15 /* WeatherViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99FEA359260A674E00D24F15 /* WeatherViewController.swift */; };
@@ -56,6 +58,8 @@
 		997242FD260BBDB8003B32BD /* WeatherService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherService.swift; sourceTree = "<group>"; };
 		99724300260BC995003B32BD /* WeatherData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherData.swift; sourceTree = "<group>"; };
 		9972F912260F28FA00AE7E6E /* WeatherView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WeatherView.xib; sourceTree = "<group>"; };
+		99BC7A83260FA46F005539FA /* WeatherDataTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherDataTableViewCell.swift; sourceTree = "<group>"; };
+		99BC7A84260FA46F005539FA /* WeatherDataTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WeatherDataTableViewCell.xib; sourceTree = "<group>"; };
 		99FEA352260A674E00D24F15 /* Weather.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Weather.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		99FEA355260A674E00D24F15 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		99FEA357260A674E00D24F15 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -199,6 +203,8 @@
 			isa = PBXGroup;
 			children = (
 				9972F912260F28FA00AE7E6E /* WeatherView.xib */,
+				99BC7A84260FA46F005539FA /* WeatherDataTableViewCell.xib */,
+				99BC7A83260FA46F005539FA /* WeatherDataTableViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -307,6 +313,7 @@
 				99FEA362260A675100D24F15 /* LaunchScreen.storyboard in Resources */,
 				99FEA35F260A675100D24F15 /* Assets.xcassets in Resources */,
 				99FEA35D260A674F00D24F15 /* Main.storyboard in Resources */,
+				99BC7A86260FA46F005539FA /* WeatherDataTableViewCell.xib in Resources */,
 				9972F913260F28FA00AE7E6E /* WeatherView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -318,6 +325,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				99BC7A85260FA46F005539FA /* WeatherDataTableViewCell.swift in Sources */,
 				997242E9260BA4C6003B32BD /* WeatherNetworkManager.swift in Sources */,
 				9966E90F260C5B0C007DA8FD /* DatabaseManager.swift in Sources */,
 				997242FE260BBDB8003B32BD /* WeatherService.swift in Sources */,

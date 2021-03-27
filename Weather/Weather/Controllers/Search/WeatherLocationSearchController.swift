@@ -31,6 +31,10 @@ class WeatherLocationSearchController: BaseViewController {
         self.viewModel.isLoading.bind { (isLoading) in
             isLoading ? self.showSpinner() : self.removeSpinner()
         }
+        
+        self.viewModel.errorHandler.bind { (error) in
+            
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -58,16 +62,19 @@ extension WeatherLocationSearchController: UITableViewDelegate, UITableViewDataS
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let item = self.viewModel.recentlySearched.value[indexPath.row]
-        let viewModel = WeatherViewModel(weatherData: item)
-        let viewController = WeatherViewController(viewModel: viewModel)
-        self.present(viewController, animated: true, completion: nil)        
+        viewModel.fetchWeatherData(for: item.name, context: self)
     }
 }
 
 extension WeatherLocationSearchController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         if let searchString = searchBar.text, !searchString.isEmpty {
-            viewModel.fetchWeatherData(for: searchString)
+            viewModel.fetchWeatherData(for: searchString, context: self)
+            clearSearchBar()
         }
+    }
+    
+    func clearSearchBar() {
+        self.searchBar.text = nil
     }
 }

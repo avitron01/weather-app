@@ -10,7 +10,7 @@ import UIKit.UIViewController
 
 class WeatherLocationSearchViewModel {    
     var isLoading = Box(false)
-    var errorHandler: Box<Error?> = Box(nil)
+    var errorHandler: Box<String?> = Box(nil)
     
     let database: DatabaseManager = {
         return DatabaseManager.shared
@@ -20,17 +20,28 @@ class WeatherLocationSearchViewModel {
         return Box(DatabaseManager.shared.recentlySearchedLocations())
     }()
     
-    func fetchWeatherData(for location: String) {
+    func fetchWeatherData(for location: String, context: UIViewController) {
         self.isLoading.value = true
         WeatherService.fetchCurrentWeather(for: location) { (result) in
             self.isLoading.value = false
             switch result {
             case .success(let weatherData):
-                self.presentWeatherDetailViewController(with: weatherData, context: UIViewController())
                 self.recentlySearched.value = self.database.recentlySearchedLocations()
+                self.presentWeatherDetailViewController(with: weatherData, context: context)                
             case .error(let error):
-                self.errorHandler.value = error
+                self.handleFetchError(error)
             }
+        }
+    }
+
+    func handleFetchError(_ error: WeatherServiceError) {
+        switch error {
+        case .parseError, .urlCreationError, .decoding(_), .network(_), .noDataFound:
+            self.errorHandler.value = "Error fetching weather data"
+        case .networkUnavailable:
+            self.errorHandler.value = "Internet Unavailable"
+        case .apiError(let error):
+            self.errorHandler.value = error.description
         }
     }
     
@@ -44,7 +55,9 @@ class WeatherLocationSearchViewModel {
         return weathers
     }
     
-    func presentWeatherDetailViewController(with: WeatherData, context: UIViewController) {
-        
+    func presentWeatherDetailViewController(with item: WeatherData, context: UIViewController) {
+        let viewModel = WeatherViewModel(weatherData: item)
+        let viewController = WeatherViewController(viewModel: viewModel)
+        context.present(viewController, animated: true, completion: nil)
     }
 }
