@@ -12,6 +12,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="WeatherViewController" customModule="Weather" customModuleProvider="target">
             <connections>
                 <outlet property="backgroundView" destination="WQJ-iB-Xlk" id="C0k-R6-p8A"/>
+                <outlet property="closeButton" destination="IE7-Vx-bOd" id="qHM-B0-AEb"/>
                 <outlet property="favouriteButton" destination="7jg-tR-8aR" id="YQq-Aj-drr"/>
                 <outlet property="tableView" destination="heg-bX-cYs" id="nNB-cH-wQn"/>
                 <outlet property="view" destination="iN0-l3-epB" id="M7s-FH-h07"/>
@@ -83,6 +84,20 @@
                         <action selector="favouriteButtonTapped:" destination="-1" eventType="touchUpInside" id="RZw-hV-Hci"/>
                     </connections>
                 </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IE7-Vx-bOd">
+                    <rect key="frame" x="15" y="59" width="35" height="35"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="35" id="Ncm-vE-XMV"/>
+                        <constraint firstAttribute="width" constant="35" id="PiE-0a-gVr"/>
+                    </constraints>
+                    <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <state key="normal">
+                        <imageReference key="image" image="xmark.circle.fill" catalog="system" symbolScale="large" renderingMode="template"/>
+                    </state>
+                    <connections>
+                        <action selector="closeButtonTapped:" destination="-1" eventType="touchUpInside" id="wU4-TV-Dr3"/>
+                    </connections>
+                </button>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="heg-bX-cYs">
                     <rect key="frame" x="0.0" y="492" width="414" height="370"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -104,11 +119,13 @@
                 <constraint firstItem="aJM-Yx-dO1" firstAttribute="height" secondItem="iN0-l3-epB" secondAttribute="height" multiplier="0.5" id="JE2-YZ-vBz"/>
                 <constraint firstItem="heg-bX-cYs" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="Lhv-xL-QMl"/>
                 <constraint firstAttribute="trailing" secondItem="WQJ-iB-Xlk" secondAttribute="trailing" id="WQm-bw-WXH"/>
+                <constraint firstItem="IE7-Vx-bOd" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="15" id="aza-z0-ygW"/>
                 <constraint firstAttribute="bottom" secondItem="WQJ-iB-Xlk" secondAttribute="bottom" id="css-RX-86e"/>
                 <constraint firstItem="7jg-tR-8aR" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="15" id="fsa-gx-fwC"/>
                 <constraint firstItem="aJM-Yx-dO1" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="iN1-Iu-etc"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="7jg-tR-8aR" secondAttribute="trailing" constant="15" id="j1t-ye-QPC"/>
                 <constraint firstItem="WQJ-iB-Xlk" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="jbw-kM-09i"/>
+                <constraint firstItem="IE7-Vx-bOd" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="15" id="u6d-KT-4Al"/>
                 <constraint firstItem="aJM-Yx-dO1" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="xwj-yZ-Ryj"/>
             </constraints>
             <point key="canvasLocation" x="-614.49275362318849" y="-119.19642857142857"/>
@@ -116,6 +133,7 @@
     </objects>
     <resources>
         <image name="heart" catalog="system" width="128" height="109"/>
+        <image name="xmark.circle.fill" catalog="system" width="128" height="121"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

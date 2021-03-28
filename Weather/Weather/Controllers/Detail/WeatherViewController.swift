@@ -8,6 +8,7 @@
 import UIKit
 
 class WeatherViewController: BaseViewController {
+    //MARK: - Outlet properties
     @IBOutlet weak var weatherImage: UIImageView!
     @IBOutlet weak var weatherLocation: UILabel!
     @IBOutlet weak var weatherTemperature: UILabel!
@@ -17,10 +18,13 @@ class WeatherViewController: BaseViewController {
     @IBOutlet weak var favouriteButton: UIButton!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var backgroundView: UIView!
+    @IBOutlet weak var closeButton: UIButton!
     
+    //MARK: - Stored properties
     let cellConstants = TableCellConstants.WeatherViewController.self
     let viewModel: WeatherViewModel
     
+    //MARK: - Lazy properties
     lazy var gradientLayer: CAGradientLayer = {
         let gradientLayer = CAGradientLayer()
         gradientLayer.startPoint = CGPoint(x: 0, y: 0)
@@ -33,6 +37,7 @@ class WeatherViewController: BaseViewController {
         return CAEmitterLayer.weatherParticleEmitter()
     }()
 
+    //MARK: - Computed properties
     var emitterCoordinates: CGRect {
         let x = self.view.frame.maxX
         let y = (self.view.frame.midY / 2.0)
@@ -48,6 +53,7 @@ class WeatherViewController: BaseViewController {
         return CGRect(x: x, y: y, width: width, height: self.view.bounds.height)
     }
     
+    //MARK: - Initializers
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -57,6 +63,7 @@ class WeatherViewController: BaseViewController {
         super.init(nibName: nil, bundle: nil)
     }
     
+    //MARK: - View controller life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         self.registerTableCellNibs()
@@ -69,18 +76,19 @@ class WeatherViewController: BaseViewController {
         self.viewModel.isFavourite.bind { (isFavourite) in
             self.updateFavouriteButton(isFavourite)
         }
-
+        
         self.updateLabelColors()
         self.addWeatherGradientLayer()
         self.addWeatherParticles()
+        self.updateCloseButtonStyle()
+        self.addGradientAnimation()
     }
-
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+    
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
         self.gradientLayer.frame = self.gradientFrame
         self.particleEmitter.emitterPosition = self.emitterCoordinates.origin
-        self.addGradientAnimation()
-     }
+    }
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
@@ -92,14 +100,27 @@ class WeatherViewController: BaseViewController {
         }, completion: nil)
     }
 
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        self.gradientLayer.removeAllAnimations()
+        self.gradientLayer.removeFromSuperlayer()
+        self.particleEmitter.removeFromSuperlayer()
+    }
+    
+    //MARK: - Outlet actions
     @IBAction func favouriteButtonTapped(_ sender: Any) {
         self.viewModel.toggleIsFavourite()
     }
     
+    @IBAction func closeButtonTapped(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+    //MARK: - UI config methods
     func registerTableCellNibs() {
         tableView.register(UINib(nibName: cellConstants.weatherDataNibName, bundle: nil), forCellReuseIdentifier: cellConstants.weatherData)
     }
-    
+        
     func updateFavouriteButton(_ isFavourite: Bool) {
         var image: UIImage?
         var tintColor: UIColor?
@@ -123,6 +144,12 @@ class WeatherViewController: BaseViewController {
         }
     }
 
+    func updateCloseButtonStyle() {
+        let config = UIImage.SymbolConfiguration(pointSize: 30, weight: .ultraLight, scale: .medium)
+        let image = UIImage(systemName: "xmark.circle.fill", withConfiguration: config)
+        self.closeButton.setImage(image, for: .normal)
+    }
+    
     func addWeatherGradientLayer() {
         self.gradientLayer.colors = self.viewModel.weatherGradientColors
         self.backgroundView.layer.addSublayer(gradientLayer)
@@ -151,6 +178,7 @@ class WeatherViewController: BaseViewController {
     }
 }
 
+//MARK: - Table view delegates and data source
 extension WeatherViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.viewModel.otherWeatherData?.count ?? 0
