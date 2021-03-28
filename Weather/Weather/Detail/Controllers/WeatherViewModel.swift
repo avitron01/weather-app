@@ -116,7 +116,7 @@ class WeatherViewModel {
     init(weatherData: WeatherData) {
         self.weatherData = weatherData
         self.weatherLocation = weatherData.name
-        self.weatherDescription = weatherData.weather.first?.description
+        self.weatherDescription = weatherData.weather.first?.description.capitalizingFirstLetter()
         
         if let favouriteInfo = database.fetchWeatherFavouriteInfo(for: weatherData.id) {
             self.isFavourite.value = favouriteInfo.isFavorite

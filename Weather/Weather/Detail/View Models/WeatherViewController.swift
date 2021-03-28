@@ -23,6 +23,7 @@ class WeatherViewController: BaseViewController {
     //MARK: - Stored properties
     let cellConstants = TableCellConstants.WeatherViewController.self
     let viewModel: WeatherViewModel
+    var firstTimeLayoutUpdate = true
     
     //MARK: - Lazy properties
     lazy var gradientLayer: CAGradientLayer = {
@@ -83,9 +84,12 @@ class WeatherViewController: BaseViewController {
         self.updateCloseButtonStyle()
     }
 
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
-        self.updateLayers()
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        if firstTimeLayoutUpdate {
+            firstTimeLayoutUpdate.toggle()
+            self.updateLayers()
+        }
     }
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
