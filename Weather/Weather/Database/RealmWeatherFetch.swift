@@ -36,7 +36,7 @@ extension DatabaseManager: RealmWeatherFetch {
     }
     
     func fetchWeatherData(cityID: String) -> WeatherData? {
-        let value = self.fetchValues(of: WeatherData.realmType, primaryKey: cityID)
+        let value = self.fetchValues(of: WeatherData.realmType, primaryKey: Int(cityID))
         return value?.codableObject
     }
     

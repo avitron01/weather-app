@@ -52,7 +52,7 @@ class WeatherService: WeatherServiceProtcol {
                 database.saveValue(weatherData.realmData)
             case .error(let error):
                 if (error == WeatherServiceError.networkUnavailable) {
-                    guard let weatherData = database.fetchWeatherData(for: cityID) else {
+                    guard let weatherData = database.fetchWeatherData(cityID: cityID) else {
                         print("No cached weather data found for \(cityID)")
                         completion(result)
                         return
