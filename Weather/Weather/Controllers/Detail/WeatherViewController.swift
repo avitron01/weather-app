@@ -77,15 +77,21 @@ class WeatherViewController: BaseViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        self.gradientLayer.frame = self.gradientFrame
+        self.particleEmitter.emitterPosition = self.emitterCoordinates.origin
         self.addGradientAnimation()
      }
     
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
-        self.gradientLayer.frame = self.gradientFrame
-        self.particleEmitter.emitterPosition = self.emitterCoordinates.origin
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        coordinator.animate(alongsideTransition: { context in
+            self.gradientLayer.frame = self.gradientFrame
+            self.particleEmitter.emitterPosition = self.emitterCoordinates.origin
+            self.gradientLayer.removeAllAnimations()
+            self.addGradientAnimation()
+        }, completion: nil)
     }
-    
+
     @IBAction func favouriteButtonTapped(_ sender: Any) {
         self.viewModel.toggleIsFavourite()
     }
