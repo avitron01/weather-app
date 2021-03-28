@@ -23,14 +23,14 @@ class WeatherLocationSearchViewModel {
     func fetchWeatherData(for location: String, context: UIViewController) {
         self.isLoading.value = true
         WeatherService.fetchCurrentWeather(for: location) { (result) in
-            self.isLoading.value = false
             switch result {
             case .success(let weatherData):
-                self.recentlySearched.value = self.database.recentlySearchedLocations()
+                self.updateRecentlySearched()
                 self.presentWeatherDetailViewController(with: weatherData, context: context)                
             case .error(let error):
                 self.handleFetchError(error)
             }
+            self.isLoading.value = false
         }
     }
 
@@ -45,14 +45,8 @@ class WeatherLocationSearchViewModel {
         }
     }
     
-    func fetchRecentlySearched() -> [WeatherData] {
-        var weathers: [WeatherData] = []
-        let values = database.fetchValues(of: WeatherData.realmType)
-        weathers = values.map { (weather) -> WeatherData in
-            return weather.codableObject
-        }
-        
-        return weathers
+    func updateRecentlySearched() {
+        self.recentlySearched.value = self.database.recentlySearchedLocations()
     }
     
     func presentWeatherDetailViewController(with item: WeatherData, context: UIViewController) {

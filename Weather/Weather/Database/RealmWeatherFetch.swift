@@ -34,6 +34,8 @@ extension DatabaseManager: RealmWeatherFetch {
         
         return codableValue
     }
-
     
+    func fetchWeatherFavouriteInfo(for id: Int) -> RealmFavouriteWeatherLocation? {
+        return self.fetchValues(of: RealmFavouriteWeatherLocation.self, primaryKey: id)
+    }
 }

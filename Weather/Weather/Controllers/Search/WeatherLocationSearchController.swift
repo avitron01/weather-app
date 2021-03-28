@@ -30,6 +30,7 @@ class WeatherLocationSearchController: BaseViewController {
                 
         self.viewModel.isLoading.bind { (isLoading) in
             isLoading ? self.showSpinner() : self.removeSpinner()
+            self.hideRecentsList(self.shouldHideRecentsList)
         }
         
         self.viewModel.errorHandler.bind { (message) in
@@ -48,9 +49,13 @@ class WeatherLocationSearchController: BaseViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        let shouldHideRecents = self.shouldHideRecentsList
-        self.tableView.isHidden = shouldHideRecents
-        self.searchLabel.isHidden = !shouldHideRecents
+        self.viewModel.updateRecentlySearched()
+        self.hideRecentsList(self.shouldHideRecentsList)
+    }
+    
+    func hideRecentsList(_ hide: Bool) {
+        self.tableView.isHidden = hide
+        self.searchLabel.isHidden = !hide
     }
 }
 

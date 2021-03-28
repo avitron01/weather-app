@@ -3,6 +3,7 @@
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -10,6 +11,8 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="WeatherViewController" customModule="Weather" customModuleProvider="target">
             <connections>
+                <outlet property="backgroundView" destination="WQJ-iB-Xlk" id="C0k-R6-p8A"/>
+                <outlet property="favouriteButton" destination="7jg-tR-8aR" id="YQq-Aj-drr"/>
                 <outlet property="tableView" destination="heg-bX-cYs" id="nNB-cH-wQn"/>
                 <outlet property="view" destination="iN0-l3-epB" id="M7s-FH-h07"/>
                 <outlet property="weatherDescription" destination="OeS-cS-bTk" id="TAJ-ps-Tgu"/>
@@ -27,6 +30,10 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WQJ-iB-Xlk">
+                    <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                </view>
                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="aJM-Yx-dO1">
                     <rect key="frame" x="0.0" y="44" width="414" height="448"/>
                     <subviews>
@@ -63,6 +70,19 @@
                         <constraint firstAttribute="trailing" secondItem="OeS-cS-bTk" secondAttribute="trailing" id="fJS-gF-1y8"/>
                     </constraints>
                 </stackView>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7jg-tR-8aR">
+                    <rect key="frame" x="364" y="59" width="35" height="35"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="35" id="diF-tR-0VV"/>
+                        <constraint firstAttribute="width" constant="35" id="g9e-eo-2Sv"/>
+                    </constraints>
+                    <state key="normal">
+                        <imageReference key="image" image="heart" catalog="system" symbolScale="large"/>
+                    </state>
+                    <connections>
+                        <action selector="favouriteButtonTapped:" destination="-1" eventType="touchUpInside" id="RZw-hV-Hci"/>
+                    </connections>
+                </button>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="heg-bX-cYs">
                     <rect key="frame" x="0.0" y="492" width="414" height="370"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -77,18 +97,25 @@
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
                 <constraint firstItem="heg-bX-cYs" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" id="1Af-Sx-x6W"/>
+                <constraint firstItem="WQJ-iB-Xlk" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="2bY-u9-MvZ"/>
                 <constraint firstItem="heg-bX-cYs" firstAttribute="bottom" secondItem="vUN-kp-3ea" secondAttribute="bottom" id="BSf-m6-dOl"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="aJM-Yx-dO1" secondAttribute="trailing" id="Do7-On-LTm"/>
                 <constraint firstItem="heg-bX-cYs" firstAttribute="top" secondItem="aJM-Yx-dO1" secondAttribute="bottom" id="GrE-J3-qO4"/>
                 <constraint firstItem="aJM-Yx-dO1" firstAttribute="height" secondItem="iN0-l3-epB" secondAttribute="height" multiplier="0.5" id="JE2-YZ-vBz"/>
                 <constraint firstItem="heg-bX-cYs" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="Lhv-xL-QMl"/>
+                <constraint firstAttribute="trailing" secondItem="WQJ-iB-Xlk" secondAttribute="trailing" id="WQm-bw-WXH"/>
+                <constraint firstAttribute="bottom" secondItem="WQJ-iB-Xlk" secondAttribute="bottom" id="css-RX-86e"/>
+                <constraint firstItem="7jg-tR-8aR" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="15" id="fsa-gx-fwC"/>
                 <constraint firstItem="aJM-Yx-dO1" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="iN1-Iu-etc"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="7jg-tR-8aR" secondAttribute="trailing" constant="15" id="j1t-ye-QPC"/>
+                <constraint firstItem="WQJ-iB-Xlk" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="jbw-kM-09i"/>
                 <constraint firstItem="aJM-Yx-dO1" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="xwj-yZ-Ryj"/>
             </constraints>
             <point key="canvasLocation" x="-614.49275362318849" y="-119.19642857142857"/>
         </view>
     </objects>
     <resources>
+        <image name="heart" catalog="system" width="128" height="109"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

@@ -72,12 +72,14 @@ enum WeatherState: String {
         //For now we handle Day and Night gradients
         if isDayTime {
             gradientColors = [(61, 133, 192),
+                              (61, 133, 192),
                               (175, 227, 255),
                               (227, 241, 255),
                               (253, 253, 253),
                               (140, 197, 240)]
         } else {
-            gradientColors =  [(32, 86, 160),
+            gradientColors =  [(61, 133, 192),
+                               (32, 86, 160),
                                (17, 54, 119),
                                (8, 37,93)]
         }
@@ -93,6 +95,7 @@ enum WeatherState: String {
 class WeatherViewModel {
     let weatherData: WeatherData
     let weatherLocation: String
+    var isFavourite: Box<Bool> = Box(false)
     let weatherDescription: String?
     var weatherTemperature: String = "-"
     var weatherState: WeatherState?
@@ -101,12 +104,20 @@ class WeatherViewModel {
     var isDayTime: Bool = true
     var iconName: String?
     
+    private var database: DatabaseManager = {
+        return DatabaseManager.shared
+    }()
+    
     var otherWeatherData: [(field: String, value: String)]?
     
     init(weatherData: WeatherData) {
         self.weatherData = weatherData
         self.weatherLocation = weatherData.name
         self.weatherDescription = weatherData.weather.first?.description
+        
+        if let favouriteInfo = database.fetchWeatherFavouriteInfo(for: weatherData.id) {
+            self.isFavourite.value = favouriteInfo.isFavorite
+        }
         
         if let temp = weatherData.main?.temp {
             self.weatherTemperature = "\(temp)°C"
@@ -146,4 +157,9 @@ class WeatherViewModel {
         self.otherWeatherData = otherData
     }
 
+    func toggleIsFavourite() {
+        self.isFavourite.value.toggle()
+        let realmData = RealmFavouriteWeatherLocation(weather: self.weatherData, isFavourite: self.isFavourite.value)
+        database.saveValue(realmData)
+    }
 }

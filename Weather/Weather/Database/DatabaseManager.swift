@@ -22,6 +22,10 @@ class DatabaseManager {
         localRealm.objects(type)
     }
     
+    func fetchValues<Type: Object, KeyType>(of type: Type.Type, primaryKey: KeyType) -> Type? {
+        localRealm.object(ofType: type, forPrimaryKey: primaryKey)
+    }
+    
     func saveValue<T: Object>(_ object: T) {
         try! localRealm.write {
             localRealm.add(object, update: .modified)
