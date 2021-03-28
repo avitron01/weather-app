@@ -34,10 +34,10 @@ class WeatherViewController: BaseViewController {
     }()
 
     var emitterCoordinates: CGRect {
-        let x = self.view.frame.maxX + 100
-        let y = self.view.frame.midY - (self.view.frame.width / 2)
+        let x = self.view.frame.maxX
+        let y = (self.view.frame.midY / 2.0)
         let width: CGFloat = 10.0
-        let height = self.view.frame.width / 2
+        let height: CGFloat = 10.0
         return CGRect(x: x, y: y, width: width, height: height)
     }
     
@@ -83,6 +83,7 @@ class WeatherViewController: BaseViewController {
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         self.gradientLayer.frame = self.gradientFrame
+        self.particleEmitter.emitterPosition = self.emitterCoordinates.origin
     }
     
     @IBAction func favouriteButtonTapped(_ sender: Any) {
