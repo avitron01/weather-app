@@ -32,9 +32,18 @@ class WeatherLocationSearchController: BaseViewController {
             isLoading ? self.showSpinner() : self.removeSpinner()
         }
         
-        self.viewModel.errorHandler.bind { (error) in
-            
+        self.viewModel.errorHandler.bind { (message) in
+            if let message = message {
+                self.showErrorAlert(with: message)
+            }
         }
+    }
+    
+    func showErrorAlert(with message: String) {
+        let alert = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "Ok", style: .default, handler: nil)
+        alert.addAction(okAction)
+        self.parent?.present(alert, animated: true, completion: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -63,6 +72,7 @@ extension WeatherLocationSearchController: UITableViewDelegate, UITableViewDataS
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let item = self.viewModel.recentlySearched.value[indexPath.row]
         viewModel.fetchWeatherData(for: item.name, context: self)
+        dismisKeyboard()
     }
 }
 
@@ -71,10 +81,15 @@ extension WeatherLocationSearchController: UISearchBarDelegate {
         if let searchString = searchBar.text, !searchString.isEmpty {
             viewModel.fetchWeatherData(for: searchString, context: self)
             clearSearchBar()
+            dismisKeyboard()
         }
     }
     
     func clearSearchBar() {
         self.searchBar.text = nil
+    }
+    
+    func dismisKeyboard() {
+        self.searchBar.endEditing(true)
     }
 }
