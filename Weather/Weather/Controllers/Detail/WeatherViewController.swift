@@ -80,27 +80,18 @@ class WeatherViewController: BaseViewController {
         self.updateLabelColors()
         self.addWeatherGradientLayer()
         self.addWeatherParticles()
-        self.updateCloseButtonStyle()        
+        self.updateCloseButtonStyle()
     }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        self.addGradientAnimation()
-    }
-    
+
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
-        self.gradientLayer.frame = self.gradientFrame
-        self.particleEmitter.emitterPosition = self.emitterCoordinates.origin
+        self.updateLayers()
     }
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
         coordinator.animate(alongsideTransition: { context in
-            self.gradientLayer.frame = self.gradientFrame
-            self.particleEmitter.emitterPosition = self.emitterCoordinates.origin
-            self.gradientLayer.removeAllAnimations()
-            self.addGradientAnimation()
+            self.updateLayers()
         }, completion: nil)
     }
 
@@ -125,6 +116,13 @@ class WeatherViewController: BaseViewController {
         tableView.register(UINib(nibName: cellConstants.weatherDataNibName, bundle: nil), forCellReuseIdentifier: cellConstants.weatherData)
     }
         
+    func updateLayers() {
+        self.gradientLayer.frame = self.gradientFrame
+        self.particleEmitter.emitterPosition = self.emitterCoordinates.origin
+        self.gradientLayer.removeAllAnimations()
+        self.addGradientAnimation()
+    }
+    
     func updateFavouriteButton(_ isFavourite: Bool) {
         var image: UIImage?
         var tintColor: UIColor?
