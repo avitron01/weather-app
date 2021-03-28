@@ -22,8 +22,8 @@ final class WeatherNetworkManager {
     
     private let session: URLSession = {
         let config = URLSessionConfiguration.default
-//        config.waitsForConnectivity = true
-//        config.timeoutIntervalForResource = 60
+        config.waitsForConnectivity = true
+        config.timeoutIntervalForResource = 10
         return URLSession(configuration: config)
     }()
 
@@ -33,9 +33,6 @@ final class WeatherNetworkManager {
     }
     
     func configureNetworkMonitor() {
-//        self.monitor.pathUpdateHandler = { [weak self] path in
-//            self?.isNetworkAvailable = (path.status == .satisfied)
-//        }
         let queue = DispatchQueue(label: "NetworkMonitor")
         monitor.start(queue: queue)
     }

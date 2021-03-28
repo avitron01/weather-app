@@ -7,8 +7,6 @@
 
 import UIKit
 
-//MARK: - TODO: Handle error cases
-
 class WeatherLocationSearchController: BaseViewController {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var searchLabel: UILabel!
