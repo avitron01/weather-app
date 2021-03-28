@@ -14,3 +14,11 @@
 - ✅ Search       
 - ✅ Favourites            
 - ✅ Weather UI with particle animations
+
+
+### Preview:
+
+#### Weather Search and Detail
+
+https://user-images.githubusercontent.com/24877003/112759740-fee20080-9011-11eb-9d51-b7cdaf544054.mov
+
