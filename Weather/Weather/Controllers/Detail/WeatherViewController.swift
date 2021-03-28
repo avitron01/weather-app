@@ -80,7 +80,11 @@ class WeatherViewController: BaseViewController {
         self.updateLabelColors()
         self.addWeatherGradientLayer()
         self.addWeatherParticles()
-        self.updateCloseButtonStyle()
+        self.updateCloseButtonStyle()        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         self.addGradientAnimation()
     }
     
