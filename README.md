@@ -1,6 +1,6 @@
 # weather-app
 
-## Prerequistes
+## Prerequisites
 - Xcode 12 and above
 - Mac OS 11 or above for SFSymbol support
 
