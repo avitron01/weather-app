@@ -21,9 +21,11 @@ enum HTTPMethod: String {
 
 enum WeatherURL {
     typealias Location = String
+    typealias CityID = String
     
     case base
     case current(Location)
+    case city(CityID)
     
     var path: String {
         switch self {
@@ -31,12 +33,14 @@ enum WeatherURL {
             return "api.openweathermap.org"
         case .current(_):
             return "/data/2.5/weather"
+        case .city(_):
+            return "/data/2.5/weather"
         }
     }
     
     var method: HTTPMethod {
         switch self {
-        case .base, .current(_):
+        case .base, .current(_), .city(_):
             return .get
         }
     }
@@ -47,6 +51,9 @@ enum WeatherURL {
             return nil
         case .current(let location):
             return [URLQueryItem(name: "q", value: location),
+                    URLQueryItem(name: "units", value: "metric")]
+        case .city(let cityID):
+            return [URLQueryItem(name: "id", value: cityID),
                     URLQueryItem(name: "units", value: "metric")]
         }
     }

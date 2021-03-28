@@ -44,4 +44,26 @@ class WeatherService: WeatherServiceProtcol {
             completion(result)
         }
     }
+    
+    static func fetchWeather(using cityID: String, completion: @escaping CurrentWeatherServiceCompletion) {
+        network.fetchData(for: .city(cityID), type: WeatherData.self) { result in
+            switch result {
+            case .success(let weatherData):
+                database.saveValue(weatherData.realmData)
+            case .error(let error):
+                if (error == WeatherServiceError.networkUnavailable) {
+                    guard let weatherData = database.fetchWeatherData(for: cityID) else {
+                        print("No cached weather data found for \(cityID)")
+                        completion(result)
+                        return
+                    }
+                    
+                    completion(Result.success(weatherData))
+                    return
+                }
+            }
+            
+            completion(result)
+        }
+    }
 }

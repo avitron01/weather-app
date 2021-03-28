@@ -31,6 +31,16 @@ class DatabaseManager {
             localRealm.add(object, update: .modified)
         }
     }
+    
+    func deleteValue<T: Object>(_ object: T) {
+        localRealm.delete(object)        
+    }
+    
+    func addObserver<Type: Object>(for type: Type.Type, observer: @escaping (RealmCollectionChange<Results<Type>>) -> Void)
+    -> NotificationToken {
+        let results = fetchValues(of: type)
+        return results.observe(observer)
+    }
 }
 
 

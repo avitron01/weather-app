@@ -19,18 +19,46 @@
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="73n-gv-whE">
                                 <rect key="frame" x="0.0" y="44" width="414" height="769"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="favouriteCell" id="f06-1A-DvW">
+                                        <rect key="frame" x="0.0" y="28" width="414" height="43.5"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="f06-1A-DvW" id="WBM-dP-aEZ">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="K20-1j-zoJ" id="jtY-6E-RZ0"/>
+                                    <outlet property="delegate" destination="K20-1j-zoJ" id="whV-M5-7An"/>
+                                </connections>
                             </tableView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Favourites ❤️ will appear here" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Hc-I8-wiM">
+                                <rect key="frame" x="0.0" y="44" width="414" height="769"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="47"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="7Gw-r5-EJe"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="73n-gv-whE" firstAttribute="top" secondItem="7Gw-r5-EJe" secondAttribute="top" id="Avw-hR-Rfu"/>
+                            <constraint firstAttribute="trailing" secondItem="7Hc-I8-wiM" secondAttribute="trailing" id="XGk-py-Xhe"/>
                             <constraint firstItem="73n-gv-whE" firstAttribute="trailing" secondItem="7Gw-r5-EJe" secondAttribute="trailing" id="bQd-Kb-EdX"/>
                             <constraint firstItem="73n-gv-whE" firstAttribute="leading" secondItem="7Gw-r5-EJe" secondAttribute="leading" id="eeY-pT-w22"/>
+                            <constraint firstItem="7Hc-I8-wiM" firstAttribute="top" secondItem="7Gw-r5-EJe" secondAttribute="top" id="jwE-LL-th3"/>
                             <constraint firstItem="73n-gv-whE" firstAttribute="bottom" secondItem="7Gw-r5-EJe" secondAttribute="bottom" id="nEL-35-P4U"/>
+                            <constraint firstItem="7Hc-I8-wiM" firstAttribute="leading" secondItem="7Gw-r5-EJe" secondAttribute="leading" id="oZN-wj-qpO"/>
+                            <constraint firstItem="7Gw-r5-EJe" firstAttribute="bottom" secondItem="7Hc-I8-wiM" secondAttribute="bottom" id="sUi-Xp-4Ba"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" systemItem="favorites" id="mLr-bd-qbm"/>
+                    <connections>
+                        <outlet property="favouritesLabel" destination="7Hc-I8-wiM" id="yc6-nn-ani"/>
+                        <outlet property="tableView" destination="73n-gv-whE" id="thw-Ce-OUy"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aIS-NA-5io" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -90,7 +118,7 @@
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="pG9-fC-PXQ"/>
                                 </connections>
                             </searchBar>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Search" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ECv-Cy-Rk2">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Search 🔍" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ECv-Cy-Rk2">
                                 <rect key="frame" x="0.0" y="88" width="414" height="725"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="47"/>
                                 <nil key="textColor"/>
