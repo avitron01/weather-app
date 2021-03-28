@@ -20,7 +20,33 @@ class WeatherViewController: BaseViewController {
     
     let cellConstants = TableCellConstants.WeatherViewController.self
     let viewModel: WeatherViewModel
-    var gradientView: CAGradientLayer?
+    
+    lazy var gradientLayer: CAGradientLayer = {
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.startPoint = CGPoint(x: 0, y: 0)
+        gradientLayer.endPoint = CGPoint(x: 1, y: 1)
+        gradientLayer.frame = CGRect.zero
+        return gradientLayer
+    }()
+    
+    lazy var particleEmitter: CAEmitterLayer = {
+        return CAEmitterLayer.weatherParticleEmitter()
+    }()
+
+    var emitterCoordinates: CGRect {
+        let x = self.view.frame.maxX + 100
+        let y = self.view.frame.midY - (self.view.frame.width / 2)
+        let width: CGFloat = 10.0
+        let height = self.view.frame.width / 2
+        return CGRect(x: x, y: y, width: width, height: height)
+    }
+    
+    var gradientFrame: CGRect {
+        let width = self.view.bounds.width * 3
+        let x = -(width - self.view.bounds.width)
+        let y = self.view.bounds.minY
+        return CGRect(x: x, y: y, width: width, height: self.view.bounds.height)
+    }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -45,18 +71,18 @@ class WeatherViewController: BaseViewController {
         }
 
         self.updateLabelColors()
-        self.addWeatherGradientLayer(isDayTime: self.viewModel.isDayTime)
+        self.addWeatherGradientLayer()
+        self.addWeatherParticles()
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.addGradientAnimation()
-    }
+     }
     
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
-        let bounds = self.view.bounds
-        self.gradientView?.frame = CGRect(x: -5, y: 0, width: bounds.width * 2, height: bounds.height)
+        self.gradientLayer.frame = self.gradientFrame
     }
     
     @IBAction func favouriteButtonTapped(_ sender: Any) {
@@ -90,27 +116,31 @@ class WeatherViewController: BaseViewController {
         }
     }
 
-    func addWeatherGradientLayer(isDayTime: Bool) {
-        let gradientLayer = CAGradientLayer()
-        gradientLayer.colors = self.viewModel.weatherGradientColors
-        gradientLayer.startPoint = CGPoint(x: 0, y: 0)
-        gradientLayer.endPoint = CGPoint(x: 1, y: 1)
-        gradientLayer.frame = CGRect.zero
-                
+    func addWeatherGradientLayer() {
+        self.gradientLayer.colors = self.viewModel.weatherGradientColors
         self.backgroundView.layer.addSublayer(gradientLayer)
-        let bounds = self.view.bounds
-        gradientLayer.frame = CGRect(x: -bounds.width * 2, y: 0, width: bounds.width * 2, height: bounds.height)
-        self.gradientView = gradientLayer
     }
     
     func addGradientAnimation() {
-        let animation = CABasicAnimation(keyPath: "transform.translation.x")
-//        animation.duration = 5.0
-        animation.fromValue = -self.view.bounds.width
-        animation.toValue = 0
-        animation.autoreverses = true
-        animation.repeatCount = Float.infinity
-        self.gradientView?.add(animation, forKey: "gradientAnimation")
+        let animationKey: String = "gradientAnimation"
+        
+        guard let animationKeys = gradientLayer.animationKeys(), animationKeys.contains(animationKey) else {
+            let animation = CABasicAnimation(keyPath: "transform.translation.x")
+            animation.duration = 7.0
+            animation.fromValue = self.gradientFrame.width - (self.gradientFrame.width / 3)
+            animation.toValue = self.gradientFrame.maxX - (self.gradientFrame.width / 3)
+            animation.autoreverses = true
+            animation.repeatCount = Float.infinity
+            self.gradientLayer.add(animation, forKey: animationKey)
+            return
+        }
+    }
+    
+    func addWeatherParticles() {
+        self.particleEmitter.emitterPosition = self.emitterCoordinates.origin
+        self.particleEmitter.emitterSize = self.emitterCoordinates.size
+        self.particleEmitter.emitterCells = CAEmitterLayer.emitterCells(for: self.viewModel.isDayTime)
+        self.backgroundView.layer.addSublayer(self.particleEmitter)
     }
 }
 
