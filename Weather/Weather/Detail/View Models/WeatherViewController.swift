@@ -34,17 +34,30 @@ class WeatherViewController: BaseViewController {
         return gradientLayer
     }()
     
-    lazy var particleEmitter: CAEmitterLayer = {
-        return CAEmitterLayer.weatherParticleEmitter()
+    lazy var particleEmitters: [CAEmitterLayer] = {
+        let count = 2
+        var emitters: [CAEmitterLayer] = []
+        for _ in 1...count {
+            emitters.append(CAEmitterLayer.weatherParticleEmitter())
+        }
+        
+        return emitters
     }()
 
     //MARK: - Computed properties
-    var emitterCoordinates: CGRect {
-        let x = self.view.frame.maxX
-        let y = (self.view.frame.midY / 2.0)
-        let width: CGFloat = 10.0
-        let height: CGFloat = 10.0
-        return CGRect(x: x, y: y, width: width, height: height)
+    var emitterCoordinates: [CGPoint] {
+        var rects: [CGPoint] = []
+        let count = self.particleEmitters.count
+        let offsetY = ((self.view.frame.midY / CGFloat(count))) / 2
+        let offsetX: CGFloat = 50
+        
+        for index in 1...count {
+            let x = self.view.frame.maxX + offsetX
+            let y = offsetY * CGFloat(index)
+            rects.append(CGPoint(x: x, y: y))
+        }
+
+        return rects
     }
     
     var gradientFrame: CGRect {
@@ -103,7 +116,10 @@ class WeatherViewController: BaseViewController {
         super.viewDidDisappear(animated)
         self.gradientLayer.removeAllAnimations()
         self.gradientLayer.removeFromSuperlayer()
-        self.particleEmitter.removeFromSuperlayer()
+        
+        for particle in particleEmitters {
+            particle.removeFromSuperlayer()
+        }
     }
     
     //MARK: - Outlet actions
@@ -122,7 +138,9 @@ class WeatherViewController: BaseViewController {
         
     func updateLayers() {
         self.gradientLayer.frame = self.gradientFrame
-        self.particleEmitter.emitterPosition = self.emitterCoordinates.origin
+        for (index, particle) in self.particleEmitters.enumerated() {
+            particle.emitterPosition = self.emitterCoordinates[index]
+        }
         self.gradientLayer.removeAllAnimations()
         self.addGradientAnimation()
     }
@@ -177,10 +195,12 @@ class WeatherViewController: BaseViewController {
     }
     
     func addWeatherParticles() {
-        self.particleEmitter.emitterPosition = self.emitterCoordinates.origin
-        self.particleEmitter.emitterSize = self.emitterCoordinates.size
-        self.particleEmitter.emitterCells = CAEmitterLayer.emitterCells(for: self.viewModel.isDayTime)
-        self.backgroundView.layer.addSublayer(self.particleEmitter)
+        for (index, particle) in self.particleEmitters.enumerated() {
+            particle.emitterPosition = self.emitterCoordinates[index]
+            particle.emitterCells = CAEmitterLayer.emitterCells(for: self.viewModel.isDayTime)
+            particle.emitterSize = CGSize(width: 10.0, height: 10.0)
+            self.backgroundView.layer.addSublayer(particle)
+        }
     }
 }
 
