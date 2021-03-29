@@ -75,6 +75,7 @@ class FavouriteWeatherLocationViewModel {
     func presentWeatherDetailViewController(with item: WeatherData, context: UIViewController) {
         let viewModel = WeatherViewModel(weatherData: item)
         let viewController = WeatherViewController(viewModel: viewModel)
+        viewController.modalPresentationStyle = .fullScreen
         context.present(viewController, animated: true, completion: nil)
     }
 }
