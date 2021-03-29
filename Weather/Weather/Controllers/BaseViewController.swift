@@ -33,13 +33,7 @@ class SpinnerViewController: UIViewController {
 
 class BaseViewController: UIViewController, SpinnerViewControllerProtocol {
     var spinnerVC: SpinnerViewController = SpinnerViewController()
-        
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        // Do any additional setup after loading the view.
-    }
-    
+
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         spinnerVC.view.frame = view.frame
@@ -57,6 +51,5 @@ class BaseViewController: UIViewController, SpinnerViewControllerProtocol {
         spinnerVC.willMove(toParent: nil)
         spinnerVC.view.removeFromSuperview()
         spinnerVC.removeFromParent()
-    }
-    
+    }    
 }

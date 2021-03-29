@@ -8,6 +8,79 @@
 import Foundation
 import UIKit.UIImage
 
+class WeatherViewModel {
+    let weatherData: WeatherData
+    let weatherLocation: String
+    var isFavourite: Box<Bool> = Box(false)
+    let weatherDescription: String?
+    var weatherTemperature: String = "-"
+    var weatherState: WeatherState?
+    var weatherGradientColors: [CGColor]?
+    var weatherImage: UIImage?
+    var isDayTime: Bool = true
+    var iconName: String?
+    
+    private var database: DatabaseManager = {
+        return DatabaseManager.shared
+    }()
+    
+    var otherWeatherData: [(field: String, value: String)]?
+    
+    init(weatherData: WeatherData) {
+        self.weatherData = weatherData
+        self.weatherLocation = weatherData.name
+        self.weatherDescription = weatherData.weather.first?.description.capitalizingFirstLetter()
+        
+        if let favouriteInfo = database.fetchWeatherFavouriteInfo(for: weatherData.id) {
+            self.isFavourite.value = favouriteInfo.isFavorite
+        }
+        
+        if let temp = weatherData.main?.temp {
+            self.weatherTemperature = "\(temp.rounded())°C"
+        }
+        if let currentWeatherInfo = weatherData.weather.first {
+            self.initializeWeatherInfo(using: currentWeatherInfo)
+        }
+        self.initializeOtherWeatherData(using: weatherData)
+    }
+    
+    func initializeWeatherInfo(using weather: Weather) {
+        let iconInfo = weather.iconImageInfo
+        self.isDayTime = iconInfo.isDayTime
+        self.iconName = iconInfo.iconName
+        
+        let weatherState = WeatherState(rawValue: iconInfo.iconName)
+        if let state = weatherState {
+            self.weatherState = state
+            self.weatherImage = UIImage(systemName: state.getImageName(isDayTime: isDayTime))?.withRenderingMode(.alwaysOriginal)
+                .withTintColor(state.getTintColor(isDayTime: isDayTime))
+            self.weatherGradientColors = state.getWeatherGradientColor(isDayTime: isDayTime)
+        }
+    }
+    
+    func initializeOtherWeatherData(using weatherData: WeatherData) {
+        var otherData: [(field: String, value: String)] = []
+        otherData.append(("Visibilty:", "\(weatherData.visibility / 1000) km"))
+        
+        if let main = weatherData.main {
+            otherData.append(contentsOf: [("Feels like:", "\(main.feelsLike.rounded())°C"),
+                                          ("Temp High:", "\(main.tempMax.rounded())°C"),
+                                          ("Temp Low:", "\(main.tempMin.rounded())°C"),
+                                          ("Pressure:", "\(main.pressure)hPa"),
+                                          ("Humidity:", "\(main.humidity)%")])
+        }
+         
+        self.otherWeatherData = otherData
+    }
+
+    func toggleIsFavourite() {
+        self.isFavourite.value.toggle()
+        let realmData = RealmFavouriteWeatherLocation(weather: self.weatherData, isFavourite: self.isFavourite.value)
+        database.saveValue(realmData)
+    }
+}
+
+
 enum WeatherState: String {
     case clearSky = "01"
     case fewClouds = "02"
@@ -92,77 +165,5 @@ enum WeatherState: String {
         }
         
         return cgColors
-    }
-}
-
-class WeatherViewModel {
-    let weatherData: WeatherData
-    let weatherLocation: String
-    var isFavourite: Box<Bool> = Box(false)
-    let weatherDescription: String?
-    var weatherTemperature: String = "-"
-    var weatherState: WeatherState?
-    var weatherGradientColors: [CGColor]?
-    var weatherImage: UIImage?
-    var isDayTime: Bool = true
-    var iconName: String?
-    
-    private var database: DatabaseManager = {
-        return DatabaseManager.shared
-    }()
-    
-    var otherWeatherData: [(field: String, value: String)]?
-    
-    init(weatherData: WeatherData) {
-        self.weatherData = weatherData
-        self.weatherLocation = weatherData.name
-        self.weatherDescription = weatherData.weather.first?.description.capitalizingFirstLetter()
-        
-        if let favouriteInfo = database.fetchWeatherFavouriteInfo(for: weatherData.id) {
-            self.isFavourite.value = favouriteInfo.isFavorite
-        }
-        
-        if let temp = weatherData.main?.temp {
-            self.weatherTemperature = "\(temp)°C"
-        }
-        if let currentWeatherInfo = weatherData.weather.first {
-            self.initializeWeatherInfo(using: currentWeatherInfo)
-        }
-        self.initializeOtherWeatherData(using: weatherData)
-    }
-    
-    func initializeWeatherInfo(using weather: Weather) {
-        let iconInfo = weather.iconImageInfo
-        self.isDayTime = iconInfo.isDayTime
-        self.iconName = iconInfo.iconName
-        
-        let weatherState = WeatherState(rawValue: iconInfo.iconName)
-        if let state = weatherState {
-            self.weatherState = state
-            self.weatherImage = UIImage(systemName: state.getImageName(isDayTime: isDayTime))?.withRenderingMode(.alwaysOriginal)
-                .withTintColor(state.getTintColor(isDayTime: isDayTime))
-            self.weatherGradientColors = state.getWeatherGradientColor(isDayTime: isDayTime)
-        }
-    }
-    
-    func initializeOtherWeatherData(using weatherData: WeatherData) {
-        var otherData: [(field: String, value: String)] = []
-        otherData.append(("Visibilty:", "\(weatherData.visibility / 1000) km"))
-        
-        if let main = weatherData.main {
-            otherData.append(contentsOf: [("Feels like:", "\(main.feelsLike)°C"),
-                                          ("Temp High:", "\(main.tempMax)°C"),
-                                          ("Temp Low:", "\(main.tempMin)°C"),
-                                          ("Pressure:", "\(main.pressure)hPa"),
-                                          ("Humidity:", "\(main.humidity)%")])
-        }
-         
-        self.otherWeatherData = otherData
-    }
-
-    func toggleIsFavourite() {
-        self.isFavourite.value.toggle()
-        let realmData = RealmFavouriteWeatherLocation(weather: self.weatherData, isFavourite: self.isFavourite.value)
-        database.saveValue(realmData)
     }
 }

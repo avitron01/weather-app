@@ -8,14 +8,19 @@
 import UIKit
 
 class FavouriteWeatherLocationController: BaseViewController {
+    //MARK: - Outlet properties
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var favouritesLabel: UILabel!
+    
+    //MARK: - Private properties
     private let viewModel = FavouriteWeatherLocationViewModel()
     
+    //MARK: - Computed property
     var shouldFavouritesList: Bool {
         return (self.viewModel.favoriteLocationsList.value?.count ?? 0) <= 0
     }
     
+    //MARK: - View controller lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -40,6 +45,7 @@ class FavouriteWeatherLocationController: BaseViewController {
         self.hideFavouritesList(self.shouldFavouritesList)
     }
     
+    //MARK: - Helper methods
     func hideFavouritesList(_ hide: Bool) {
         self.tableView.isHidden = hide
         self.favouritesLabel.isHidden = !hide
@@ -53,6 +59,7 @@ class FavouriteWeatherLocationController: BaseViewController {
     }
 }
 
+//MARK: - Table view datasource and delegates
 extension FavouriteWeatherLocationController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return "Favourties"
