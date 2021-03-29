@@ -20,5 +20,6 @@
 
 #### Weather Search and Detail
 
-![out](https://user-images.githubusercontent.com/24877003/112798381-70f62c00-908a-11eb-8329-b2e49c2f8d1a.gif)
+![out](https://user-images.githubusercontent.com/24877003/112874066-14bdf700-90e0-11eb-84b9-9405f56b3d54.gif)
+
 
